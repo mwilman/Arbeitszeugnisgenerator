@@ -25,7 +25,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         {
             InitializeComponent();
 
-            if(savedVariations == null)
+            if (savedVariations == null)
             {
                 presenter = new CriteriaTextSelectionP(this, selectedCriteria);
                 GradeSelectedByUser = false;
@@ -48,7 +48,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         {
             if (viewState == ViewState.IsRefreshing) return;
             viewState = ViewState.IsRefreshing;
-            
+
             RefreshSelectedGrade();
             RefreshVariations();
             RefreshPredefinedText();
@@ -72,16 +72,16 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             {
                 presenter.SelectGrade(0);
             }
-                if (presenter.SelectedGrade != null)
-                {
-                    CbxGrade.SelectedItem = presenter.SelectedGrade.Name;
-                }
-            
+            if (presenter.SelectedGrade != null)
+            {
+                CbxGrade.SelectedItem = presenter.SelectedGrade.Name;
+            }
+
         }
 
         private void RefreshVariations()
         {
-            if (presenter.SelectedGrade != null && presenter.SelectedGrade.Variations.Count >0)
+            if (presenter.SelectedGrade != null && presenter.SelectedGrade.Variations.Count > 0)
             {
                 CbxVariation.Enabled = true;
                 CbxVariation.Items.Clear();
@@ -130,7 +130,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         private void RefreshBtnExtend()
         {
 
-            if (presenter.SelectedVariation != null && CheckLabelHeightToSmall() )
+            if (presenter.SelectedVariation != null && CheckLabelHeightToSmall())
             {
                 BtnExtend.Enabled = true;
             }
@@ -149,12 +149,12 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             SizeF extent = graphics.MeasureString(LblPredefinedText.Text, LblPredefinedText.Font, LblPredefinedText.Width);
             if (extent.Height > LblPredefinedText.Height)
             {
-               return true;
+                return true;
             }
             else
             {
                 return false;
-            }            
+            }
         }
 
         #endregion
@@ -166,7 +166,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             if (viewState == ViewState.IsRefreshing) return;
             GradeSelectedByUser = true;
             VariationSelectedByUser = false;
-            if(presenter.SelectedVariation != null)
+            if (presenter.SelectedVariation != null)
             {
                 View.InternDetails.SavedVariations.Remove(presenter.SelectedVariation.guid);
             }
@@ -184,7 +184,10 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
                 View.InternDetails.SavedVariations.Remove(presenter.SelectedVariation.guid);
             }
             presenter.SelectVariationByReference(CbxVariation.SelectedItem.ToString());
-            View.InternDetails.SavedVariations.Add(presenter.SelectedVariation.guid);
+            if (presenter.SelectedVariation != null)
+            {
+                View.InternDetails.SavedVariations.Add(presenter.SelectedVariation.guid);
+            }
         }
 
         private void BtnExtend_Click(object sender, EventArgs e)
@@ -220,18 +223,18 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             int selectedGrade = CbxGrade.SelectedIndex;
             int selectedVariation = CbxVariation.SelectedIndex;
 
-            CriteriaEditorV criteriaEditor = new CriteriaEditorV(presenter.CurShowedCriteria,selectedGrade,selectedVariation);
-            
+            CriteriaEditorV criteriaEditor = new CriteriaEditorV(presenter.CurShowedCriteria, selectedGrade, selectedVariation);
+
             criteriaEditor.ShowDialog();
-            
-            
+
+
             CbxGrade_SelectedIndexChanged(sender, e);
 
-            if(selectedVar != null)
-            presenter.SelectVariationByReference(selectedVar);
+            if (selectedVar != null)
+                presenter.SelectVariationByReference(selectedVar);
 
             Refresh();
-           
+
         }
 
         private void BtnUp_Click(object sender, EventArgs e)
