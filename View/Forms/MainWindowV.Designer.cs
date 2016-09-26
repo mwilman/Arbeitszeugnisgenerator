@@ -47,9 +47,6 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.Forms
             this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speichernUnterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kriterienBearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.datengrundlageErstellenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.seriendruckfeldDateiErstellenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vorlageAuswählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.informationenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolTipMailmerge = new System.Windows.Forms.ToolTip(this.components);
@@ -175,7 +172,6 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.Forms
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
             this.kriterienBearbeitenToolStripMenuItem,
-            this.datengrundlageErstellenToolStripMenuItem,
             this.hilfeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -228,31 +224,6 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.Forms
             this.kriterienBearbeitenToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
             this.kriterienBearbeitenToolStripMenuItem.Text = "Kriterien bearbeiten";
             this.kriterienBearbeitenToolStripMenuItem.Click += new System.EventHandler(this.kriterienBearbeitenToolStripMenuItem_Click);
-            // 
-            // datengrundlageErstellenToolStripMenuItem
-            // 
-            this.datengrundlageErstellenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.seriendruckfeldDateiErstellenToolStripMenuItem,
-            this.vorlageAuswählenToolStripMenuItem});
-            this.datengrundlageErstellenToolStripMenuItem.Name = "datengrundlageErstellenToolStripMenuItem";
-            this.datengrundlageErstellenToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.datengrundlageErstellenToolStripMenuItem.Text = "Serienbrief";
-            // 
-            // seriendruckfeldDateiErstellenToolStripMenuItem
-            // 
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.Name = "seriendruckfeldDateiErstellenToolStripMenuItem";
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.Text = "Seriendruckfeld Datei erstellen";
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.Click += new System.EventHandler(this.datengrundlageErstellenToolStripMenuItem_Click);
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.MouseLeave += new System.EventHandler(this.seriendruckfeldDateiErstellenToolStripMenuItem_MouseLeave);
-            this.seriendruckfeldDateiErstellenToolStripMenuItem.MouseHover += new System.EventHandler(this.seriendruckfeldDateiErstellenToolStripMenuItem_MouseHover);
-            // 
-            // vorlageAuswählenToolStripMenuItem
-            // 
-            this.vorlageAuswählenToolStripMenuItem.Name = "vorlageAuswählenToolStripMenuItem";
-            this.vorlageAuswählenToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
-            this.vorlageAuswählenToolStripMenuItem.Text = "Vorlage Auswählen";
-            this.vorlageAuswählenToolStripMenuItem.Click += new System.EventHandler(this.BtnChooseTemplate_Click);
             // 
             // hilfeToolStripMenuItem
             // 
@@ -324,9 +295,6 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.Forms
         private System.Windows.Forms.ToolStripMenuItem neuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kriterienBearbeitenToolStripMenuItem;
         private System.Windows.Forms.Button BtnSave;
-        private System.Windows.Forms.ToolStripMenuItem datengrundlageErstellenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem seriendruckfeldDateiErstellenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vorlageAuswählenToolStripMenuItem;
         private System.Windows.Forms.ToolTip ToolTipMailmerge;
     }
 }
