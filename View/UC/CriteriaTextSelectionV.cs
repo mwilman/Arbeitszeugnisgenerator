@@ -171,7 +171,10 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
                 View.InternDetails.SavedVariations.Remove(presenter.SelectedVariation.guid);
             }
             presenter.SelectGrade(CbxGrade.SelectedIndex);
-            View.InternDetails.SavedVariations.Add(presenter.SelectedVariation.guid);
+            if (presenter.SelectedVariation != null)
+            {
+                View.InternDetails.SavedVariations.Add(presenter.SelectedVariation.guid);
+            }
         }
 
         private void CbxVariation_SelectedIndexChanged(object sender, EventArgs e)
