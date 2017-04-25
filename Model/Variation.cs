@@ -6,9 +6,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.Model
     {
         public string Name { get; set; }
         public string PredifinedText { get; set; }
-
         public Guid guid { get; set; }
-
         public Variation() : this(null)
         {
         }
@@ -17,8 +15,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.Model
             this.Name = name;
             guid = Guid.NewGuid();
         }
-
-
+        
         internal Variation CreateBackup()
         {
             Variation newVariation = new Variation();
@@ -27,7 +24,8 @@ namespace Brockhaus.PraktikumZeugnisGenerator.Model
             {
                 newVariation.PredifinedText = (string)this.PredifinedText.Clone();
             }
-            else {
+            else
+            {
                 newVariation.PredifinedText = null;
             }
             return newVariation;

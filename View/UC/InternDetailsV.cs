@@ -22,9 +22,9 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         private const string INVALID_FILE_FORMAT_TITLE = "Ungültiges Dateiformat";
         private const string INVALID_FILE_FORMAT_TEXT = "Bitte nur Datein mit einem gültigen Dateiformat auswählen.";
         private const string SAVEDIALOG_TITLE = "Personendaten speichern untern";
-        public InternDetailsP presenter;
+        public InternDetailsPresenter presenter;
         private ViewState viewState;
-        private MainWindowV Basis;
+        private MainWindowView Basis;
         public string LoadedDataPath;
         public bool BulletpointsPractExp;
         public bool BulletpointsExcercises;
@@ -34,7 +34,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         {
             InitializeComponent();
 
-            presenter = new InternDetailsP(this);
+            presenter = new InternDetailsPresenter(this);
             viewState = ViewState.WaitingForInput;
             BulletpointsExcercises = false;
             BulletpointsPractExp = false;
@@ -44,7 +44,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
 
         //Dies ist mit absicht nicht im Constructor enthalten, weil dies dafür sorgt, dass der MainWindowV.cs Designer nicht richtig angezeigt wird.
         //Es muss trotzdem die Basis gesetzt werden, damit das Updaten richtig funktioniert
-        public void SetBasis(MainWindowV basis)
+        public void SetBasis(MainWindowView basis)
         {
             Basis = basis;
         }
@@ -121,10 +121,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
 
         public void SaveDetailsAs()
         {
-            if (viewState == ViewState.IsRefreshing)
-            {
-                return;
-            }
+            if (viewState == ViewState.IsRefreshing) return;
             UpdatePresenter();
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = SAVEDIALOG_TITLE;
@@ -209,30 +206,43 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
         }
         internal void SaveDetails()
         {
-            if (viewState == ViewState.IsRefreshing) return;
+            if (LoadedDataPath == "")
             {
-                UpdatePresenter();
-                string savePath = LoadedDataPath;
-                try
+                SaveDetailsAs();
+            }
+
+            if (viewState == ViewState.IsRefreshing) return;
+            UpdatePresenter();
+            string savePath = LoadedDataPath;
+            try
+            {
+
+                if (Path.GetExtension(savePath) != ".xml")
                 {
-                    presenter.SaveInternDetails(savePath);
+                    throw new InvalidFileFormatException();
                 }
-                catch (ArgumentException)
+                if (!savePath.Contains(".xml") && savePath != "")
                 {
-                    ShowMessageDialog(NAME_INCORRECT_TITLE, NAME_INCORRECT_TEXT);
+                    savePath += ".xml";
                 }
-                catch (SecurityException)
-                {
-                    ShowMessageDialog(AUTHORIZATION_MISSING_TITLE, AUTHORIZATION_MISSING_TEXT);
-                }
-                catch (InvalidFileFormatException)
-                {
-                    ShowMessageDialog(INVALID_FILE_FORMAT_TITLE, INVALID_FILE_FORMAT_TEXT);
-                }
-                catch (Exception ex) when (ex is DirectoryNotFoundException || ex is PathTooLongException)
-                {
-                    ShowMessageDialog(WRONG_PATH_TITLE, WRONG_PATH_TEXT);
-                }
+
+                presenter.SaveInternDetails(savePath);
+            }
+            catch (ArgumentException)
+            {
+                ShowMessageDialog(NAME_INCORRECT_TITLE, NAME_INCORRECT_TEXT);
+            }
+            catch (SecurityException)
+            {
+                ShowMessageDialog(AUTHORIZATION_MISSING_TITLE, AUTHORIZATION_MISSING_TEXT);
+            }
+            catch (InvalidFileFormatException)
+            {
+                ShowMessageDialog(INVALID_FILE_FORMAT_TITLE, INVALID_FILE_FORMAT_TEXT);
+            }
+            catch (Exception ex) when (ex is DirectoryNotFoundException || ex is PathTooLongException)
+            {
+                ShowMessageDialog(WRONG_PATH_TITLE, WRONG_PATH_TEXT);
             }
         }
 
@@ -257,7 +267,7 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             string practicalexperience = RtxtPracticalExperience.Text;
             presenter.PracticalExperience = practicalexperience;
             Sex sex;
-            if (RbtnMale.Checked == true)
+            if (RbtnMale.Checked)
             {
                 sex = Sex.Male;
             }
@@ -311,9 +321,15 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             presenter.Exercises = RtxtExercises.Text;
         }
 
+        private void RtxtPracticalExperience_Leave(object sender, EventArgs e)
+        {
+            if (viewState == ViewState.IsRefreshing) return;
+            presenter.PracticalExperience = RtxtPracticalExperience.Text;
+        }
+
         private void RBtnsSex_CheckedChanged(object sender, EventArgs e)
         {
-            if (RbtnMale.Checked == true)
+            if (RbtnMale.Checked)
             {
                 presenter.Sex = Sex.Male;
             }
@@ -321,12 +337,6 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             {
                 presenter.Sex = Sex.Female;
             }
-        }
-
-        private void RtxtPracticalExperience_Leave(object sender, EventArgs e)
-        {
-            if (viewState == ViewState.IsRefreshing) return;
-            presenter.PracticalExperience = RtxtPracticalExperience.Text;
         }
 
         private void All_KeyDown(object sender, KeyEventArgs e)
@@ -380,6 +390,8 @@ namespace Brockhaus.PraktikumZeugnisGenerator.View.UC
             RtxtPracticalExperience.DeselectAll();
         }
         #endregion
+
+
     }
     public enum ViewState
     {

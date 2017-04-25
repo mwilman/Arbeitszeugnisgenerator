@@ -12,9 +12,9 @@ namespace Brockhaus.PraktikumZeugnisGenerator.Presenter
         private const string NAME_ERR_TEXT = "Namen dürfen nicht doppelt vergeben werden";
         public List<Criteria> Criterias;
         public Criteria SelectedCriteria;
-        public ChooseCriteriaManagerV view;
+        public ChooseCriteriaManagerView view;
 
-        public ChooseCriteriaManagerPresenter(ChooseCriteriaManagerV view, List<Criteria> criteriaList)
+        public ChooseCriteriaManagerPresenter(ChooseCriteriaManagerView view, List<Criteria> criteriaList)
         {
             this.view = view;
             Criterias = criteriaList;

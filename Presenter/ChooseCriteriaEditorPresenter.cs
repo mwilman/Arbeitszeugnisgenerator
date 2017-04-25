@@ -11,12 +11,13 @@ namespace Brockhaus.Arbeitszeugnisgenerator.Presenter
     {
 
         private const string NAME_ERR_TITLE = "Fehler";
-        private const string NAME_ERR_TEXT = "Namen dürfen nicht doppelt vergeben werden";
+        private const string NAME_EXISTS_ERR_TEXT = "Der Name ist bereits vorhanden.";
+        private const string NAME_EMPTY_ERR_TEXT = "Der Name darf nicht leer sein.";
         public List<Criteria> Criterias;
         public Criteria SelectedCriteria;
-        public ChooseCriteriaEditorV view;
+        public ChooseCriteriaEditorView view;
 
-        public ChooseCriteriaEditorPresenter(ChooseCriteriaEditorV view, List<Criteria> criteriaList)
+        public ChooseCriteriaEditorPresenter(ChooseCriteriaEditorView view, List<Criteria> criteriaList)
         {
             this.view = view;
             Criterias = criteriaList;
@@ -26,20 +27,21 @@ namespace Brockhaus.Arbeitszeugnisgenerator.Presenter
         {
             try
             {
-                if (name == "") throw new ArgumentException();
+                if (name == "") throw new ArgumentException(NAME_EMPTY_ERR_TEXT);
                 foreach (Criteria criteria in Criterias)
                 {
-                    if (name == criteria.Name) throw new ArgumentException();
+                    if (name == criteria.Name) throw new ArgumentException(NAME_EXISTS_ERR_TEXT);
                 }
                 Criteria newCrit = new Criteria(name);
                 Criterias.Add(newCrit);
                 SelectedCriteria = newCrit;
                 view.RefreshView();
             }
-            catch (ArgumentException)
+            catch (ArgumentException exception)
             {
-                MessageDialog msg = new MessageDialog(NAME_ERR_TITLE, NAME_ERR_TEXT);
+                MessageDialog msg = new MessageDialog(NAME_ERR_TITLE, exception.Message);
                 msg.ShowDialog();
+                throw new ArgumentException(exception.Message);
             }
         }
 

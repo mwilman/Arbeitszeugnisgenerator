@@ -3,13 +3,12 @@ using Brockhaus.PraktikumZeugnisGenerator.Model;
 using Brockhaus.PraktikumZeugnisGenerator.View.Forms;
 using Brockhaus.PraktikumZeugnisGenerator.View.UC;
 using System;
-using System.Collections.Generic;
 
 namespace Brockhaus.PraktikumZeugnisGenerator.Presenter
 {
     public class CriteriaEditorPresenter
     {
-        public CriteriaEditorV view;
+        public CriteriaEditorView view;
 
         public Criteria CurShowedCriteria;
         public Grade SelectedGrade;
@@ -54,15 +53,14 @@ namespace Brockhaus.PraktikumZeugnisGenerator.Presenter
             }
         }
 
-        public CriteriaEditorPresenter(CriteriaEditorV view, Criteria shownCriteria)
+        public CriteriaEditorPresenter(CriteriaEditorView view, Criteria shownCriteria)
         {
             CurShowedCriteria = shownCriteria;
             CriteriaBackup = shownCriteria.CreateBackup();
-
             this.view = view;
         }
 
-        public CriteriaEditorPresenter(CriteriaEditorV view, Criteria shownCriteria, int preselectedGrade, int preselectedVariation) :
+        public CriteriaEditorPresenter(CriteriaEditorView view, Criteria shownCriteria, int preselectedGrade, int preselectedVariation) :
             this(view, shownCriteria)
         {
             Viewstate = ViewState.IsRefreshing;
